@@ -11,11 +11,6 @@ fun main(args: Array<String>) {
 }
 
 fun operation (inputName: String, outputName: String, params: String, discriptionStr: String) {
-    println("Выберите способ поиска: ")
-    println("1. По слову, введите word ")
-    println("2. Через регекс, введите -r")
-    println("3. Инвертированное условие, введите -v")
-    println("4. Игнорируя размер, введите -i\n")
     val text = File("input/text1.txt").readLines()
     val rezFile = File(outputName)
     val rezLinesList = mutableListOf<String>()
@@ -63,5 +58,4 @@ fun operation (inputName: String, outputName: String, params: String, discriptio
     }
 
     rezFile.writeText(rezLinesList.joinToString(separator = "\n"))
-    println(rezLinesList)
 }
