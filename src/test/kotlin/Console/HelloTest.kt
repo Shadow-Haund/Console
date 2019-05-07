@@ -1,4 +1,3 @@
-
 package Console
 
 import org.junit.jupiter.api.Assertions.assertEquals // импортировал jupiter
@@ -10,57 +9,71 @@ private fun assertFileContent(name: String, expectedContent: String) {
     val content = file.readLines().joinToString("\n")
     assertEquals(expectedContent, content)
 }
+fun listOfPar(params:String) = params.split(" ")
 
 class HelloTest {
     @Test
-    fun operatiom() {
-        operation("input/text1.txt", "input/text2.txt", "-i -v -r", "[а-я]")
-        assertFileContent("input/text2.txt",
-                """English words to
-some kind of bullshit TO
-SDKS LACKS KKK""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-i -v word", "Во")
-        assertFileContent("input/text2.txt",
-                """English words to
-some kind of bullshit TO
+    fun operation1() {
+        val args = "-i -v -r [а-я] testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+some kind of text TO
+SDKS LACKS KKK""", res)
+    }
+    @Test
+    fun operation2() {
+        val args = "-i -v Во testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+some kind of text TO
 ФЫВА НЫВА ФИЗОВА
-SDKS LACKS KKK""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-i -r", "[a-z]")
-        assertFileContent("input/text2.txt",
-                """English words to
-some kind of bullshit TO
-SDKS LACKS KKK""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-i word", "TO")
-        assertFileContent("input/text2.txt",
-                """English words to
-some kind of bullshit TO""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-v -r", "[a-z]")
-        assertFileContent("input/text2.txt",
-                """Русские слова во
-какая то херня Во
+SDKS LACKS KKK""", res)
+    }
+    @Test
+    fun operatiom3() {
+        val args = "-i -r [a-z] testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+some kind of text TO
+SDKS LACKS KKK""", res)
+    }
+    @Test
+    fun operatiom4() {
+        val args = "-i word TO testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+some kind of text TO""", res)
+    }
+    @Test
+    fun operatiom5() {
+        val args = "-v -r [a-z] testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""Русские слова во
+текст разного содержания Во
 ФЫВА НЫВА ФИЗОВА
-SDKS LACKS KKK""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-v word", "Русские")
-        assertFileContent("input/text2.txt",
-                """English words to
-какая то херня Во
-some kind of bullshit TO
+SDKS LACKS KKK""", res)
+    }
+    @Test
+    fun operatiom6() {
+        val args = "-v word Русские testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+текст разного содержания Во
+some kind of text TO
 ФЫВА НЫВА ФИЗОВА
-SDKS LACKS KKK""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "-r", "[a-z]")
-        assertFileContent("input/text2.txt",
-                """English words to
-some kind of bullshit TO""")
-        File("input/text2.txt")
-        operation("input/text1.txt", "input/text2.txt", "word", "to")
-        assertFileContent("input/text2.txt",
-                """English words to""")
-        File("input/text2.txt")
+SDKS LACKS KKK""", res)
+    }
+    @Test
+    fun operatiom7() {
+        val args = "-r [a-z] testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to
+some kind of text TO""", res)
+    }
+    @Test
+    fun operatiom8() {
+        val args = "to testData/text1.txt".split(" ").toTypedArray()
+        val res = execute(args)
+        assertEquals("""English words to""", res)
     }
 }
